@@ -1,21 +1,22 @@
-import PropTypes from 'prop-types';
+/* eslint-disable react/prop-types */
+/* eslint-disable react/jsx-key */
 
-export function ToDos({ todo }) {
-    return (
-        <div>
-            <div>
+/* todos = [
+   {
+    title: "go to gym",
+    description: "go to gym",
+   } 
+   ]
+*/
+export function Todos({todos}) {
+
+    return <div>
+        {todos.map(function(todo) {
+            return <div>
                 <h1>{todo.title}</h1>
                 <h2>{todo.description}</h2>
-                <button>{todo.completed === true ? "Completed" : "Mark as Done"}</button>
+                <button>{todo.completed == true ? "Completed" : "Mark as Complete"}</button>
             </div>
-        </div>
-    );
+        })}
+    </div>
 }
-
-ToDos.propTypes = {
-    todo: PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        completed: PropTypes.bool.isRequired
-    }).isRequired
-};
