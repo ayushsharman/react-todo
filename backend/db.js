@@ -1,18 +1,19 @@
-const mongoose = require('mongoose')
-const { boolean } = require('zod')
+require('dotenv').config();
 
-mongoose.connect(process.env.MONGODB_URI).then(() => console.log('MongoDB connected'))
+const mongoose = require('mongoose');
+
+mongoose.connect(process.env.MONGODB_URI)
+    .then(() => console.log('MongoDB connected'))
     .catch(err => console.error('Error connecting to MongoDB:', err));
 
-const todoSchema = mongoose.Schema({
+const todoSchema = new mongoose.Schema({
     title: String,
     description: String,
-    completed: boolean,
-})
+    completed: Boolean,
+});
 
-
-const todo = mongoose.model('todo', todoSchema);
+const Todo = mongoose.model('Todo', todoSchema);
 
 module.exports = {
-    todo: todo,
-}
+    Todo: Todo,
+};
