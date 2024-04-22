@@ -1,11 +1,10 @@
-const express = require('express')
-const { createtodo } = require('./types')
-const { todo } = require('./db')
-const app = express()
-const port = 3000
+const express = require('express');
+const { createtodo } = require('./types');
+const { Todo } = require('./db'); // Correct import statement
+const app = express();
+const port = 3000;
 
-
-app.use(express.json())
+app.use(express.json());
 
 app.post('/todo', async(req, res) => {
     const createPayload = req.body;
@@ -14,28 +13,28 @@ app.post('/todo', async(req, res) => {
     if (!parsePayLoad.success) {
         res.status(411).json({
             msg: "You sent wrong data",
-        })
+        });
         return;
     }
 
-    await todo.create({
+    await Todo.create({ // Corrected to use Todo model
         title: createPayload.title,
-        desciption: createPayload.desciption,
+        description: createPayload.description, // Corrected typo in property name
         completed: false,
-    })
+    });
 
     res.json({
         msg: "Task Added"
-    })
-})
+    });
+});
 
 app.get('/todos', async(req, res) => {
-    const todos = await todo.find({})
+    const todos = await Todo.find({});
 
     res.json({
         todos,
-    })
-})
+    });
+});
 
 app.put('/completed', async(req, res) => {
     const createPayload = req.body;
@@ -44,20 +43,19 @@ app.put('/completed', async(req, res) => {
     if (!parsePayLoad.success) {
         res.status(411).json({
             msg: "You sent wrong data",
-        })
+        });
         return;
     }
 
-    await todo.update({
+    await Todo.updateOne({ // Corrected to use updateOne method
         _id: req.body.id,
-    }), {
-        complete: true,
-    }
+    }, {
+        completed: true, // Corrected property name
+    });
 
     res.json({
         msg: "Marked as completed",
-    })
-})
+    });
+});
 
-
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
