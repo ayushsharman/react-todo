@@ -3,8 +3,10 @@ const { createtodo } = require('./types');
 const { Todo } = require('./db'); // Correct import statement
 const app = express();
 const port = 3000;
+const cors = require('cors');
 
 app.use(express.json());
+app.use(cors());
 
 app.post('/todo', async(req, res) => {
     const createPayload = req.body;
