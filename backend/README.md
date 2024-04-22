@@ -1,1 +1,1 @@
-This folder will contain the frontend logic
+This folder will contain the backend logic
